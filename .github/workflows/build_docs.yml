@@ -7,10 +7,12 @@ on:
 jobs:
   example-3:
     name: Doc Build
-    runs-on: 'ubuntu-latest'
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
+        os: [ubuntu-latest]
+        python-version: [3.8]
         node-version: [12.x]
 
     steps:
