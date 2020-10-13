@@ -36,9 +36,9 @@ jobs:
         if: startsWith(runner.os, 'Linux')
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('c3org/doc/requirements.txt') }}
           restore-keys: |
-            ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+            ${{ runner.os }}-pip-${{ hashFiles('c3org/doc/requirements.txt') }}
             ${{ runner.os }}-pip-
 
       - uses: "actions/setup-python@v1"
@@ -53,7 +53,7 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           python -m pip install --upgrade pip
-          python -m pip install -r c3org/requirements.txt
+          python -m pip install -r c3org/doc/requirements.txt
 
 #      - name: Make conda environment
 #        uses: goanpeca/setup-miniconda@v1
@@ -69,11 +69,11 @@ jobs:
 #          conda list
 
       # Activate venv.
-      - name: "Activate venv for ${{ matrix.python-version }} on Linux"
-        if: startsWith(runner.os, 'Linux')
-        shell: bash -l {0}
-        run: |
-          source .venv/bin/activate
+#      - name: "Activate venv for ${{ matrix.python-version }} on Linux"
+#        if: startsWith(runner.os, 'Linux')
+#        shell: bash -l {0}
+#        run: |
+#          source .venv/bin/activate
 
       # npm install orca
       - name: Use Node.js ${{ matrix.node-version }}
