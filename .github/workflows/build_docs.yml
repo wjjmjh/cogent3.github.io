@@ -93,6 +93,7 @@ jobs:
         run: |
           source .venv/bin/activate
           pip install sphinx
+          pip install sphinx-gallery
           make github
 
       - name: Deploy
