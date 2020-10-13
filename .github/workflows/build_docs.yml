@@ -96,9 +96,6 @@ jobs:
           source .venv/bin/activate
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
-          wget https://hackage.haskell.org/package/pandoc-1.17.0.3/pandoc-1.17.0.3.tar.gz
-          tar xvzf pandoc-1.17.0.3.tar.gz
-          cd pandoc-1.17.0.3
           make github
 
       - name: Deploy
