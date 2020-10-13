@@ -33,7 +33,6 @@ jobs:
 
       # caching
       - uses: actions/cache@v2
-        if: startsWith(runner.os, 'Linux')
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('c3org/doc/requirements.txt') }}
@@ -54,7 +53,6 @@ jobs:
 
       # Setup virtualenv
       - name: "Setup virtualenv for ${{ matrix.python-version }} on Linux"
-        if: startsWith(runner.os, 'Linux')
         run: |
           python --version
           python -m venv .venv
