@@ -13,4 +13,6 @@ sphinxcontrib-bibtex==1.0.0
 sphinx-gallery==0.7
 sphinx_bootstrap_theme==0.7.1
 sphinx_panels==0.5.2
+matplotlib==3.3.2
+pandoc
 git+https://github.com/cogent3/cogent3.git@develop#egg=cogent3[dev]

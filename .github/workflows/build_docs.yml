@@ -1,15 +1,18 @@
 on:
   push:
-    branches:
-    - develop
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
 
 jobs:
   example-3:
     name: Doc Build
-    runs-on: 'ubuntu-latest'
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
+        os: [ubuntu-latest]
+        python-version: [3.8]
         node-version: [12.x]
 
     steps:
@@ -30,23 +33,32 @@ jobs:
 
       # caching
       - uses: actions/cache@v2
-        if: startsWith(runner.os, 'Linux')
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('c3org/doc/requirements.txt') }}
           restore-keys: |
-            ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+            ${{ runner.os }}-pip-${{ hashFiles('c3org/doc/requirements.txt') }}
             ${{ runner.os }}-pip-
 
-      # Setup virtualenv
-      - name: "Setup virtualenv for ${{ matrix.python-version }} on Linux"
-        if: startsWith(runner.os, 'Linux')
-        run: |
-          python --version
-          python -m venv .venv
-          source .venv/bin/activate
-          python -m pip install --upgrade pip
-          python -m pip install -r doc/requirements.txt
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.npm
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+
+      - uses: "actions/setup-python@v1"
+        with:
+          python-version: "${{ matrix.python-version }}"
+
+#      # Setup virtualenv
+#      - name: "Setup virtualenv for ${{ matrix.python-version }} on Linux"
+#        run: |
+#          python --version
+#          python -m venv .venv
+#          source .venv/bin/activate
+#          python -m pip install --upgrade pip
+#          python -m pip install -r c3org/doc/requirements.txt
 
 #      - name: Make conda environment
 #        uses: goanpeca/setup-miniconda@v1
@@ -62,11 +74,11 @@ jobs:
 #          conda list
 
       # Activate venv.
-      - name: "Run tox targets for ${{ matrix.python-version }} on Linux"
-        if: startsWith(runner.os, 'Linux')
-        shell: bash -l {0}
-        run: |
-          source .venv/bin/activate
+#      - name: "Activate venv for ${{ matrix.python-version }} on Linux"
+#        if: startsWith(runner.os, 'Linux')
+#        shell: bash -l {0}
+#        run: |
+#          source .venv/bin/activate
 
       # npm install orca
       - name: Use Node.js ${{ matrix.node-version }}
@@ -79,6 +91,11 @@ jobs:
         shell: bash -l {0}
         working-directory: c3org/doc/
         run: |
+          python --version
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
           make github
 
       - name: Deploy
