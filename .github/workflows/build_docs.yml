@@ -90,7 +90,7 @@ jobs:
       - name: delme
         shell: bash -l {0}
         run: |
-          apt-get install python3-sphinx
+          sudo apt-get install python3-sphinx
 
       - name: Build docs
         shell: bash -l {0}
