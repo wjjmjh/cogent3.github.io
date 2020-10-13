@@ -51,14 +51,14 @@ jobs:
         with:
           python-version: "${{ matrix.python-version }}"
 
-      # Setup virtualenv
-      - name: "Setup virtualenv for ${{ matrix.python-version }} on Linux"
-        run: |
-          python --version
-          python -m venv .venv
-          source .venv/bin/activate
-          python -m pip install --upgrade pip
-          python -m pip install -r c3org/doc/requirements.txt
+#      # Setup virtualenv
+#      - name: "Setup virtualenv for ${{ matrix.python-version }} on Linux"
+#        run: |
+#          python --version
+#          python -m venv .venv
+#          source .venv/bin/activate
+#          python -m pip install --upgrade pip
+#          python -m pip install -r c3org/doc/requirements.txt
 
 #      - name: Make conda environment
 #        uses: goanpeca/setup-miniconda@v1
@@ -91,8 +91,11 @@ jobs:
         shell: bash -l {0}
         working-directory: c3org/doc/
         run: |
+          python --version
+          python -m venv .venv
           source .venv/bin/activate
-          pip install sphinx sphinx-gallery jupyter-sphinx
+          python -m pip install --upgrade pip
+          python -m pip install -r c3org/doc/requirements.txt
           make github
 
       - name: Deploy
