@@ -69,7 +69,7 @@ jobs:
 #          conda list
 
       # Activate venv.
-      - name: "Run tox targets for ${{ matrix.python-version }} on Linux"
+      - name: "Activate venv for ${{ matrix.python-version }} on Linux"
         if: startsWith(runner.os, 'Linux')
         shell: bash -l {0}
         run: |
